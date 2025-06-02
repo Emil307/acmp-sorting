@@ -32,11 +32,10 @@ int main() {
     sort(results, results+n, cmp);
 
     for (int i = 0; i < n; i++) {
-        cout << results[i].surname << " " 
-             << results[i].math << " " 
-             << results[i].informatics << " " 
-             << results[i].russian << " " 
-             << results[i].math + results[i].informatics + results[i].russian << endl;
+        if (i + 1 == m) {
+            cout << results[i].surname << " " 
+            << results[i].math + results[i].informatics + results[i].russian << endl;
+        }
     }
 
     return 0;
