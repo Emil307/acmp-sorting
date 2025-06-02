@@ -14,6 +14,9 @@ bool cmp(Result a, Result b) {
     if (a.math + a.informatics + a.russian > b.math + b.informatics + b.russian) {
         return true;
     }
+    if (a.math + a.informatics + a.russian == b.math + b.informatics + b.russian) {
+        return a.surname > b.surname;
+    }
     return false;
 }
 
