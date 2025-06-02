@@ -1,44 +1,44 @@
 #include <iostream>
 using namespace std;
 
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high]; 
-    int i = low - 1;       
+void countingSort(int temperatures[], int n) {
+    // Массив для подсчета температур от -100 до +100
+    // count[0] соответствует -100°C, count[200] соответствует +100°C
+    int count[201] = {0};
     
-    for (int j = low; j < high; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
+    // Подсчитываем количество каждой температуры
+    for (int i = 0; i < n; i++) {
+        count[temperatures[i] + 100]++; // сдвигаем на 100 для положительных индексов
     }
     
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-    
-    return i + 1;
-}
-
-void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
+    // Восстанавливаем отсортированный массив
+    int index = 0;
+    for (int i = 0; i < 201; i++) {
+        int temperature = i - 100; // преобразуем индекс обратно в температуру
         
-        quickSort(arr, low, pi - 1);  
-        quickSort(arr, pi + 1, high); 
+        // Записываем эту температуру столько раз, сколько она встречалась
+        for (int j = 0; j < count[i]; j++) {
+            temperatures[index] = temperature;
+            index++;
+        }
     }
 }
 
 int main() {
-    int n, temperatures[100000];
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    int n;
     cin >> n;
+
+    int* temperatures = new int[n]();
     
     for (int i = 0; i < n; i++) {
         cin >> temperatures[i];
     }
     
-    quickSort(temperatures, 0, n - 1);
+    countingSort(temperatures, n);
     
     for (int i = 0; i < n; i++) {
         if (i > 0) cout << " ";
